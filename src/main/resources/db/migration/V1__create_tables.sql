@@ -28,7 +28,7 @@ CREATE TABLE usuario_perfil (
     CONSTRAINT fk_perfil FOREIGN KEY (perfil_id) REFERENCES profiles(id) ON DELETE CASCADE
 );
 
--- Criando a tabela de topicos
+-- Tabela de topicos
 CREATE TABLE topicos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     titulo VARCHAR(255) NOT NULL,
@@ -37,11 +37,11 @@ CREATE TABLE topicos (
     status VARCHAR(255) NOT NULL,
     usuario_forum_id INT,  -- FK para a tabela de usuarios
     curso_id INT,  -- FK para a tabela de cursos
-    CONSTRAINT fk_usuario_forum FOREIGN KEY (usuario_forum_id) REFERENCES usuarios(id) ON DELETE SET NULL,
-    CONSTRAINT fk_curso FOREIGN KEY (curso_id) REFERENCES cursos(id) ON DELETE SET NULL
+    CONSTRAINT fk_usuario_forum_topico FOREIGN KEY (usuario_forum_id) REFERENCES usuarios(id) ON DELETE SET NULL,
+    CONSTRAINT fk_curso_topico FOREIGN KEY (curso_id) REFERENCES cursos(id) ON DELETE SET NULL
 );
 
--- Criando a tabela de respostas
+-- Tabela de respostas
 CREATE TABLE respostas (
     id INT AUTO_INCREMENT PRIMARY KEY,
     mensagem TEXT NOT NULL,
@@ -49,6 +49,6 @@ CREATE TABLE respostas (
     created_at TIMESTAMP NOT NULL,
     usuario_forum_id INT,  -- FK para a tabela de usuarios
     solucao VARCHAR(255),
-    CONSTRAINT fk_topico FOREIGN KEY (topico_id) REFERENCES topicos(id) ON DELETE CASCADE,
-    CONSTRAINT fk_usuario_forum FOREIGN KEY (usuario_forum_id) REFERENCES usuarios(id) ON DELETE CASCADE
+    CONSTRAINT fk_topico_resposta FOREIGN KEY (topico_id) REFERENCES topicos(id) ON DELETE CASCADE,
+    CONSTRAINT fk_usuario_forum_resposta FOREIGN KEY (usuario_forum_id) REFERENCES usuarios(id) ON DELETE CASCADE
 );
