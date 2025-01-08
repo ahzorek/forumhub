@@ -1,16 +1,14 @@
 package com.andrezorek.forumhub.model;
 
+import com.andrezorek.forumhub.dto.DadosUsuarioCadastro;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
-@Entity
+@Entity(name="UsuarioForum")
 @Table(name = "usuarios")
-@Getter
+@Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
@@ -35,4 +33,9 @@ public class UsuarioForum {
     @OneToMany(mappedBy = "id", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RespostaTopico> respostas;
 
+    public UsuarioForum(DadosUsuarioCadastro dados) {
+        this.nome = dados.nome();
+        this.email = dados.email();
+        this.senha = dados.senha();
+    }
 }
