@@ -4,8 +4,6 @@ public enum CategoriaCurso {
 
     PROGRAMACAO,
     DESIGN,
-    NEGOCIOS,
     MARKETING,
-    COMUNICACAO,
     DATABASES;
 }

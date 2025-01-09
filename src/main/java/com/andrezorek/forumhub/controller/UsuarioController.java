@@ -32,12 +32,14 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public ResponseEntity<DadosUsuarioCadastro> createNewUsuario(@RequestBody @Valid DadosUsuarioCadastro dados, UriComponentsBuilder uriBuilder){
+    public ResponseEntity<DadosUsuarioRetorno> createNewUsuario(@RequestBody @Valid DadosUsuarioCadastro dados, UriComponentsBuilder uriBuilder){
         UsuarioForum novoUsuario  = usuarioService.createUser(dados);
 
         return ResponseEntity
                 .created(uriBuilder.path("/usuario/{id}").buildAndExpand(novoUsuario.getId()).toUri())
-                .body(new DadosUsuarioCadastro(novoUsuario));
+                .body(new DadosUsuarioRetorno(novoUsuario));
     }
+
+
 
 }

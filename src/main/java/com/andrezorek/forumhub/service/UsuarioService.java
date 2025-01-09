@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,9 +24,15 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository repositorioUsuario;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Transactional
     public UsuarioForum createUser(DadosUsuarioCadastro dados){
-        return repositorioUsuario.save(new UsuarioForum(dados));
+        UsuarioForum novoUsuario = new UsuarioForum(dados);
+        novoUsuario.setSenha(passwordEncoder.encode(dados.senha()));
+
+        return repositorioUsuario.save(novoUsuario);
     }
 
     public Page<DadosUsuarioRetorno> getAllUsers(Pageable pagination){
@@ -35,7 +43,7 @@ public class UsuarioService {
 
     public DadosUsuarioRetorno getUserById(int id) {
         return new DadosUsuarioRetorno(
-                repositorioUsuario.findById(id).get()
+                repositorioUsuario.getReferenceById(id)
         );
     }
 }
