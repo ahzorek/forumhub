@@ -1,5 +1,6 @@
 package com.andrezorek.forumhub.service;
 
+import com.andrezorek.forumhub.dto.DadosAtualizaTopico;
 import com.andrezorek.forumhub.dto.DadosCadastroTopico;
 import com.andrezorek.forumhub.dto.DadosRetornoTopico;
 import com.andrezorek.forumhub.dto.DadosUsuarioRetorno;
@@ -37,8 +38,24 @@ public class TopicoService {
 
     }
 
+    @Transactional
+    public DadosRetornoTopico updateTopico(DadosAtualizaTopico novosDados){
+        var updating = topicoRepository.getReferenceById(novosDados.id());
+
+        return new DadosRetornoTopico(updating.atualizaTopico(novosDados));
+
+    }
+
     public Page<DadosRetornoTopico> getAll(Pageable pagination){
         return topicoRepository.findAll(pagination)
                 .map(DadosRetornoTopico::new);
+    }
+
+    public DadosRetornoTopico getById(int id) {
+        return new DadosRetornoTopico(topicoRepository.getReferenceById(id));
+    }
+
+    public void deleteById(int id) {
+        topicoRepository.deleteById(id);
     }
 }

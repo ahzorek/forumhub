@@ -5,6 +5,7 @@ import com.andrezorek.forumhub.dto.DadosUsuarioCadastro;
 import com.andrezorek.forumhub.dto.DadosUsuarioRetorno;
 import com.andrezorek.forumhub.model.Curso;
 import com.andrezorek.forumhub.repository.CursoRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -37,8 +38,10 @@ public class CursoController {
 
     @GetMapping("/{id}")
     public ResponseEntity<DadosCurso> getAllCursos(@PathVariable Integer id){
+        Curso curso = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Curso não encontrado"));
+        System.out.println("Curso encontrado::: " + curso);
         return ResponseEntity.ok().body(
-                new DadosCurso(repository.findById(id).get())
+                new DadosCurso(curso)
         );
     }
 

@@ -11,7 +11,12 @@ import java.util.NoSuchElementException;
 public class ExceptionHandling {
 
     @ExceptionHandler(NoSuchElementException.class)
-    public ResponseEntity handleNotFound(){
+    public ResponseEntity<String> handleElementNotFound(){
+        return ResponseEntity.notFound().build();
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<String> handleEntityNotFound(){
         return ResponseEntity.notFound().build();
     }
 }

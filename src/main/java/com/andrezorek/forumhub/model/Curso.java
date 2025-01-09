@@ -2,10 +2,7 @@ package com.andrezorek.forumhub.model;
 
 import com.andrezorek.forumhub.dto.DadosCurso;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
@@ -14,6 +11,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 @EqualsAndHashCode(of = "id")
 public class Curso {
 
@@ -25,11 +23,13 @@ public class Curso {
     @Enumerated(EnumType.STRING)
     private CategoriaCurso categoria;
 
-    @OneToMany(mappedBy = "id")
+    @OneToMany(mappedBy = "curso")
     private List<Topico> topicos;
 
     public Curso(DadosCurso dados) {
         this.nomeCurso = dados.nome();
         this.categoria = dados.categoria();
     }
+
+
 }

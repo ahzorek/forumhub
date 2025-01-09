@@ -1,5 +1,6 @@
 package com.andrezorek.forumhub.model;
 
+import com.andrezorek.forumhub.dto.DadosAtualizaTopico;
 import com.andrezorek.forumhub.dto.DadosCadastroTopico;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -53,13 +54,24 @@ public class Topico {
         this.status = StatusTopico.ABERTO;
     }
 
+    public Topico atualizaTopico(DadosAtualizaTopico dados){
+        if(dados.titulo() != null){
+            this.titulo = dados.titulo();
+        }
+        if(dados.mensagem() != null){
+            this.mensagem = dados.mensagem();
+        }
+
+        return this;
+    }
+
     @Override
     public String toString() {
         return "Topico::: " +
                 "titulo='" + titulo + '\'' +
                 ", createdAt=" + createdAt +
                 ", status=" + status +
-                ", usuarioForum=" + usuarioForum +
-                ", curso=" + curso;
+                ", usuarioForum=" + usuarioForum.getNome() +
+                ", curso=" + curso.getNomeCurso();
     }
 }
