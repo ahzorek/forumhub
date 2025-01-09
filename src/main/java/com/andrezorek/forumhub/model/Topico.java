@@ -1,11 +1,13 @@
 package com.andrezorek.forumhub.model;
 
+import com.andrezorek.forumhub.dto.DadosCadastroTopico;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,27 +24,42 @@ public class Topico {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NotBlank
     private String titulo;
 
-    @NotBlank
     private String mensagem;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @CreationTimestamp
     private LocalDateTime createdAt;
 
     @Enumerated(EnumType.STRING)
     private StatusTopico status;
 
     @ManyToOne
-    private UsuarioForum user;
+    private UsuarioForum usuarioForum;
 
     @ManyToOne
     private Curso curso;
 
+    @Transient
     @OneToMany(mappedBy = "id", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RespostaTopico> respostas;
 
 
+    public Topico(DadosCadastroTopico dadosCadastroTopico, Curso curso, UsuarioForum user) {
+        this.curso = curso;
+        this.usuarioForum = user;
+        this.titulo = dadosCadastroTopico.titulo();
+        this.mensagem = dadosCadastroTopico.mensagem();
+        this.status = StatusTopico.ABERTO;
+    }
 
+    @Override
+    public String toString() {
+        return "Topico::: " +
+                "titulo='" + titulo + '\'' +
+                ", createdAt=" + createdAt +
+                ", status=" + status +
+                ", usuarioForum=" + usuarioForum +
+                ", curso=" + curso;
+    }
 }

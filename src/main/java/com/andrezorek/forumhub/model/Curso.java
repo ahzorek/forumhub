@@ -1,5 +1,6 @@
 package com.andrezorek.forumhub.model;
 
+import com.andrezorek.forumhub.dto.DadosCurso;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -27,4 +28,8 @@ public class Curso {
     @OneToMany(mappedBy = "id")
     private List<Topico> topicos;
 
+    public Curso(DadosCurso dados) {
+        this.nomeCurso = dados.nome();
+        this.categoria = dados.categoria();
+    }
 }

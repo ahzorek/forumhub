@@ -4,11 +4,17 @@ import com.andrezorek.forumhub.dto.DadosUsuarioCadastro;
 import com.andrezorek.forumhub.dto.DadosUsuarioRetorno;
 import com.andrezorek.forumhub.model.UsuarioForum;
 import com.andrezorek.forumhub.repository.UsuarioRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.NoSuchElementException;
+
+import static java.util.stream.Collectors.toList;
 
 @Service
 public class UsuarioService {
@@ -16,27 +22,20 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository repositorioUsuario;
 
-    public void createUser(DadosUsuarioCadastro dados){
-        repositorioUsuario.save(new UsuarioForum(dados));
+    @Transactional
+    public UsuarioForum createUser(DadosUsuarioCadastro dados){
+        return repositorioUsuario.save(new UsuarioForum(dados));
     }
 
-    public List<DadosUsuarioRetorno> getAllUsers(){
-        return repositorioUsuario.findAll()
-                .stream()
-                .map(u -> new DadosUsuarioRetorno(
-                        u.getId(),
-                        u.getNome(),
-                        u.getEmail()
-                )).collect(Collectors.toList());
+    public Page<DadosUsuarioRetorno> getAllUsers(Pageable pagination){
+        return repositorioUsuario.findAll(pagination)
+                .map(DadosUsuarioRetorno::new);
     }
 
 
-    public DadosUsuarioRetorno getUserById(int id){
-        var u = repositorioUsuario.findById(id).get();
+    public DadosUsuarioRetorno getUserById(int id) {
         return new DadosUsuarioRetorno(
-                u.getId(),
-                u.getNome(),
-                u.getEmail()
+                repositorioUsuario.findById(id).get()
         );
     }
 }

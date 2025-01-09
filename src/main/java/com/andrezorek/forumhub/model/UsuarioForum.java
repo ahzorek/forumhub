@@ -24,6 +24,7 @@ public class UsuarioForum {
 
     private String senha;
 
+    @Transient
     @ManyToMany
     private List<Perfil> profiles;
 
