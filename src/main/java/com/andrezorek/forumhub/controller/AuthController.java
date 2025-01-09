@@ -1,6 +1,7 @@
 package com.andrezorek.forumhub.controller;
 
 import com.andrezorek.forumhub.dto.DadosAuth;
+import com.andrezorek.forumhub.dto.DadosJwtToken;
 import com.andrezorek.forumhub.infra.TokenService;
 import com.andrezorek.forumhub.model.UsuarioForum;
 import jakarta.validation.Valid;
@@ -24,10 +25,11 @@ public class AuthController {
     private TokenService tokenService;
 
     @PostMapping
-    public ResponseEntity<String> autenticar(@RequestBody @Valid DadosAuth dadosAuth){
-        var token = new UsernamePasswordAuthenticationToken(dadosAuth.email(), dadosAuth.senha());
-        var auth = authManager.authenticate(token);
+    public ResponseEntity<DadosJwtToken> autenticar(@RequestBody @Valid DadosAuth dadosAuth){
+        var authToken = new UsernamePasswordAuthenticationToken(dadosAuth.email(), dadosAuth.senha());
+        var auth = authManager.authenticate(authToken);
+        var jwtToken = tokenService.gerarToken((UsuarioForum) auth.getPrincipal());
 
-        return ResponseEntity.ok().body(tokenService.gerarToken((UsuarioForum) auth.getPrincipal()));
+        return ResponseEntity.ok().body(new DadosJwtToken(jwtToken));
     }
 }
