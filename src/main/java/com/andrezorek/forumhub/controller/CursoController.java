@@ -1,10 +1,9 @@
 package com.andrezorek.forumhub.controller;
 
 import com.andrezorek.forumhub.dto.DadosCurso;
-import com.andrezorek.forumhub.dto.DadosUsuarioCadastro;
-import com.andrezorek.forumhub.dto.DadosUsuarioRetorno;
 import com.andrezorek.forumhub.model.Curso;
 import com.andrezorek.forumhub.repository.CursoRepository;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +15,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @RequestMapping("/curso")
 @RestController
+@SecurityRequirement(name = "bearer-key")
 public class CursoController {
 
     @Autowired

@@ -5,6 +5,7 @@ import com.andrezorek.forumhub.dto.DadosCadastroTopico;
 import com.andrezorek.forumhub.dto.DadosRetornoTopico;
 import com.andrezorek.forumhub.model.Topico;
 import com.andrezorek.forumhub.service.TopicoService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,6 +18,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("/topicos")
+@SecurityRequirement(name = "bearer-key")
 public class TopicoController {
 
     @Autowired

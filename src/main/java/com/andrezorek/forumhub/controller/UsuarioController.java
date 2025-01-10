@@ -5,6 +5,7 @@ import com.andrezorek.forumhub.dto.DadosUsuarioRetorno;
 import com.andrezorek.forumhub.model.UsuarioForum;
 import com.andrezorek.forumhub.service.UsuarioService;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import jakarta.validation.Valid;
 import org.springframework.data.web.PageableDefault;
@@ -16,6 +17,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("/usuario")
+@SecurityRequirement(name = "bearer-key")
 public class UsuarioController {
 
     @Autowired
