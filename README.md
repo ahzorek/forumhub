@@ -38,7 +38,7 @@ Bem-vindo ao **FórumHub**! Este é um projeto desenvolvido como parte do desafi
 
 ---
 
-## 🖌þ⏳ Estrutura do Projeto
+## 🖌 Estrutura do Projeto
 
 O projeto segue uma estrutura organizada baseada em boas práticas do Spring Boot:
 
